@@ -1,24 +1,25 @@
 <template>
-    <div class="add-task-container">
-        <h1>Añadir Tarea</h1>
-        <div class="input-group">
+    <div class="container mt-5">
+        <h1 class="text-center">Añadir Tarea</h1>
+        <div class="input-group mb-3">
             <input 
                 v-model="newTask" 
                 @keyup.enter="addTask" 
                 placeholder="Añadir nueva tarea" 
-                class="task-input"
+                class="form-control task-input" 
+                aria-label="Nueva tarea"
             />
-            <button @click="addTask" class="add-button">Añadir</button>
+            <button @click="addTask" class="btn btn-primary">Añadir</button>
         </div>
 
         <div v-if="tasks.length > 0" class="task-list">
-            <div v-for="task in tasks" :key="task.id" class="task-item">
+            <div v-for="task in tasks" :key="task.id" class="list-group-item d-flex justify-content-between align-items-center">
                 <span :class="{ completed: task.completed }">{{ task.todo }}</span>
                 <div>
-                    <button @click="toggleTaskCompletion(task)">
+                    <button @click="toggleTaskCompletion(task)" class="btn btn-secondary btn-sm">
                         {{ task.completed ? 'Desmarcar' : 'Completar' }}
                     </button>
-                    <button @click="deleteTask(task)">Eliminar</button>
+                    <button @click="deleteTask(task)" class="btn btn-danger btn-sm">Eliminar</button>
                 </div>
             </div>
         </div>
@@ -63,44 +64,8 @@ export default {
 </script>
 
 <style scoped>
-.add-task-container {
-    padding: 20px;
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.input-group {
-    display: flex;
-    margin-bottom: 10px;
-}
-
 .task-input {
-    flex-grow: 1;
-    padding: 8px;
-    margin-right: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.add-button {
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
-    color: white;
-    cursor: pointer;
-}
-
-.task-list {
-    margin-top: 20px;
-}
-
-.task-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #eee;
+    border-radius: 0.25rem; /* Redondear bordes */
 }
 
 .completed {

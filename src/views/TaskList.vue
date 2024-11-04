@@ -1,23 +1,30 @@
 <template>
-    <div>
-        <h1>Lista de Tareas</h1>
-        <button @click="fetchTasks">Cargar Tareas</button>
+    <div class="container mt-5">
+        <h1 class="text-center">Lista de Tareas</h1>
+        <button @click="fetchTasks" class="btn btn-primary mb-3">Cargar Tareas</button>
         <div v-if="tasks.length > 0">
-            <div v-for="task in tasks" :key="task.id">
-                <div>
+            <div v-for="task in tasks" :key="task.id" class="list-group mb-2">
+                <div class="list-group-item d-flex justify-content-between align-items-center">
                     <h5 :style="{ textDecoration: task.completed ? 'line-through' : 'none' }">{{ task.todo }}</h5>
-                    <span>{{ task.completed ? 'Completada' : 'Pendiente' }}</span>
-                    <button @click="toggleTaskCompletion(task)">
-                        {{ task.completed ? 'Desmarcar' : 'Completar' }}
-                    </button>
-                    <button @click="deleteTask(task)">Eliminar</button>
+                    <div>
+                        <span class="badge bg-success me-2">{{ task.completed ? 'Completada' : 'Pendiente' }}</span>
+                        <button @click="toggleTaskCompletion(task)" class="btn btn-secondary btn-sm">
+                            {{ task.completed ? 'Desmarcar' : 'Completar' }}
+                        </button>
+                        <button @click="deleteTask(task)" class="btn btn-danger btn-sm">Eliminar</button>
+                    </div>
                 </div>
             </div>
+        </div>
+        <div v-else>
+            <p class="text-center">No hay tareas disponibles. Carga tareas para comenzar.</p>
         </div>
     </div>
 </template>
 
 <script>
+import axios from 'axios'; // Asegúrate de tener axios instalado
+
 export default {
     name: "TaskList",
     data() {
@@ -27,11 +34,13 @@ export default {
     },
     methods: {
         // Llamada para obtener las tareas desde la API externa
-        fetchTasks() {
-            // Aquí deberían realizar la solicitud a la API usando axios o fetch.
-            // La URL que usaremos es: https://dummyjson.com/todos
-
-            // Sugerencia: Intentar implementarlo con axios o fetch
+        async fetchTasks() {
+            try {
+                const response = await axios.get('https://dummyjson.com/todos');
+                this.tasks = response.data.todos; // Ajusta según la estructura de datos de la API
+            } catch (error) {
+                console.error("Error al cargar las tareas:", error);
+            }
         },
 
         // Cambiar el estado de una tarea (completada/no completada)

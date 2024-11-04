@@ -1,11 +1,15 @@
-import Vue from 'vue'
-import App from './App.vue'
-import router from './router'
-// Importa Bootstrap CSS y los íconos de Bootstrap aquí
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
 
-Vue.config.productionTip = false
+// Importar Bootstrap CSS
+import 'bootstrap/dist/css/bootstrap.min.css';
+// Importar Bootstrap Icons (opcional)
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
+Vue.config.productionTip = true;
 
 new Vue({
   router,
-  render: h => h(App)
-}).$mount('#app')
+  render: h => h(App),
+}).$mount('#app');
